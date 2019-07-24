@@ -1,0 +1,16 @@
+START_PROGRAM
+a=3;
+b={
+  c=1;
+  d={
+    e=1;
+  }
+}
+_=b();
+_=d();
+_1=e;
+_=print();
+END_PROGRAM
+
+START_OUTPUT
+END_OUTPUT

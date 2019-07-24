@@ -1,0 +1,32 @@
+#!/bin/bash
+
+while true; do
+ls tests/* > /tmp/.tests
+
+if [ "$1" ]; then
+  echo SHORTEN
+  grep "$1" /tmp/.tests > /tmp/.tmp
+  mv /tmp/.tmp /tmp/.tests
+fi
+
+for x in `grep tests/pass /tmp/.tests`; do
+  echo Executing Test: $x
+  sed -n '/START_PROGRAM/,/END_PROGRAM/ p' $x | tail -n +2 | head -n -1 > /tmp/.in
+  sed -n '/START_OUTPUT/,/END_OUTPUT/ p' $x | tail -n +2 | head -n -1 > /tmp/.out
+
+  python3 cookie.py < /tmp/.in > /tmp/.res
+  diff /tmp/.res /tmp/.out
+  if [ "$?" -eq 0 ]; then
+    echo "  Test Passed"
+  else
+    echo "  Test Failed"
+    exit 1
+  fi
+done
+
+
+sleep 1
+inotifywait -r -e modify,create,delete,move .
+sleep 1
+
+done

@@ -1,0 +1,11 @@
+START_PROGRAM
+_1=10;
+_2=15;
+_=add();
+_1=_r;
+_=print();
+END_PROGRAM
+
+START_OUTPUT
+25
+END_OUTPUT
