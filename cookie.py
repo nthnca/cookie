@@ -67,7 +67,7 @@ def go(embedded):
             var_name = "static_method_name_%d" % (func_count,)
             func_count += 1
             VARIABLES[var_name] = go(True)
-            stmts = stmts + ((var, var_name + "()"),)
+            stmts = stmts + ((var, var_name),)
         else:
             stmts = stmts + ((var, op),)
             src.next_token((";",), ";")
@@ -80,7 +80,7 @@ def go(embedded):
                 return stmts
 
 def is_digit(l):
-    return l[-1].isdigit()
+    return l[0].isdigit() or l[0] == "-"
 
 def is_func(l):
     return l[-2:] == "()"
@@ -113,7 +113,6 @@ def exe(code):
             VARIABLES[stmt[0]] = get_int(stmt[1])
         else:
             VARIABLES[stmt[0]] = get_value(stmt[1])
-        # print(VARIABLES)
 
 def printx():
     print(get_value("_1"))

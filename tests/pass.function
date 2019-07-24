@@ -3,7 +3,7 @@ a=3;
 b={
   c=1;
   d={
-    e=1;
+    e=13;
   }
 }
 _=b();
@@ -13,4 +13,5 @@ _=print();
 END_PROGRAM
 
 START_OUTPUT
+13
 END_OUTPUT

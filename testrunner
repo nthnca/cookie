@@ -20,7 +20,7 @@ for x in `grep tests/pass /tmp/.tests`; do
     echo "  Test Passed"
   else
     echo "  Test Failed"
-    exit 1
+    break
   fi
 done
 
