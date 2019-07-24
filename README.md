@@ -8,13 +8,13 @@ First of all we need to be able to assign a literal to a variable.
 v = l;
 
 Next we need to be able to create a function and assign it to a variable.
-v = func {
+v = {
   [statements]
   ...
 }
 
 Finally we need to be able to call a function.
-v = f();
+_ = f();
 
 We will start out with only integers being valid literals.
 

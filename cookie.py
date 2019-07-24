@@ -46,7 +46,7 @@ class file_iter():
         return self._next_line() == None
 
 func_count=0
-def go(embedded):
+def parse_method(embedded):
     global func_count
     stmts = ()
     while True:
@@ -66,7 +66,7 @@ def go(embedded):
         if op == "{":
             var_name = "static_method_name_%d" % (func_count,)
             func_count += 1
-            VARIABLES[var_name] = go(True)
+            VARIABLES[var_name] = parse_method(True)
             stmts = stmts + ((var, var_name),)
         else:
             stmts = stmts + ((var, op),)
@@ -114,6 +114,7 @@ def exe(code):
         else:
             VARIABLES[stmt[0]] = get_value(stmt[1])
 
+# Built in functions, these probably belong in their own file.
 def printx():
     print(get_value("_1"))
 VARIABLES["print"] = printx
@@ -129,7 +130,7 @@ VARIABLES["if"] = ifx
 
 
 src = file_iter()
-VARIABLES["static_method_name_main"] = go(False)
+VARIABLES["static_method_name_main"] = parse_method(False)
 # print(VARIABLES)
 # print("################################################")
 
