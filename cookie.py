@@ -60,7 +60,7 @@ def parse_method(embedded):
 
         src.next_token(("=",), "=")
 
-        op = src.next_token(("[-]?[1-9][0-9]*", var_exp + "([(][)])?", "{"),
+        op = src.next_token(("[-]?[1-9][0-9]*|0", var_exp + "([(][)])?", "{"),
                             "Operation")
 
         if op == "{":

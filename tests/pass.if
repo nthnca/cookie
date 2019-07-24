@@ -10,9 +10,6 @@ _=if();
 _1=r;
 _=print();
 
-END_PROGRAM
-
-# The following doesn't work yet.. we don't support 0s  :-)
 r=10;
 _1=0;
 _2=a;
@@ -20,6 +17,9 @@ _=if();
 _1=r;
 _=print();
 
+END_PROGRAM
+
 START_OUTPUT
 20
+10
 END_OUTPUT
