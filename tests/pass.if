@@ -1,0 +1,25 @@
+START_PROGRAM
+a = {
+r=20;
+}
+
+r=10;
+_1=1;
+_2=a;
+_=if();
+_1=r;
+_=print();
+
+END_PROGRAM
+
+# The following doesn't work yet.. we don't support 0s  :-)
+r=10;
+_1=0;
+_2=a;
+_=if();
+_1=r;
+_=print();
+
+START_OUTPUT
+20
+END_OUTPUT
