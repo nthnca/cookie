@@ -1,46 +1,48 @@
 # cookie
 
-The goal of this project is to learn how to create and implement a programming language.
+The goal of this project is to create a small little program that implements a very basic
+programming language, but that could be used as a starting point for people interested in
+learning to code, or learning to write a programming language.
+
 
 ## Basic syntax
 
-First of all we need to be able to assign a literal to a variable.
+Assign an integer, 1, to a variable, `v`.
+```
 v = l;
+```
 
-Next we need to be able to create a function and assign it to a variable.
-v = {
+Define a function, `f`:
+```
+f = {
   [statements]
   ...
 }
+```
 
-Finally we need to be able to call a function.
-_ = f();
+Call the method `f`, and assign the result to `a`.
+```
+a = f();
+```
 
-We will start out with only integers being valid literals.
+Some further notes:
+- All variables are globally scoped. So have fun!  :-)
+- You can't pass parameters to a function, but variables are globally scoped so you can
+  just use a normal variable.
+- A method *returns* the value that is assigned to `_r` when the method exits.
+- There are just four built in functions:
+  - print(): prints the value in variable `_1`.
+  - add(): returns the result of adding the values in variable `_1` and `_2`.
+  - if(): calls the function assigned to variable `_2`, if `_1` is non-zero.
+  - loop(): repeatedly calls the function assigned to variable `_1` until that function
+    returns a non-zero value.
 
-Variables being any set of lowercase characters, plus the underscore, ie: [a-z_]+
-
-And we will have some built in functions:
-- add()
-- print()
 
 In this language, all variables are of a global scope, and nothing is ever freed,
-although it can be re-used.
+although variables can be re-used.
 
-By convention parameters are the variables _1, _2, etc.
+By convention we use the variables `_1`, `_2`, etc to pass data into a function.
 
 ## Examples
 
-Example Program:
-```
-_1 = 3;
-_2 = 4;
-sum = add()
-_1 = sum
-_ = print()
-```
-
-Example Ouput:
-```
-7
-```
+See the tests directory for examples.
