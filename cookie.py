@@ -95,20 +95,22 @@ def get_value(v1):
 
     return VARIABLES[v1]
 
-def exe(code):
+def get_func(code):
     name = code[:-2]
     if name not in VARIABLES:
         print("Unknown method:", name)
         sys.exit(1)
 
-    func = VARIABLES[name]
+    return VARIABLES[name]
+
+def exe_func(func):
     if callable(func):
         func()
         return
 
     for stmt in func:
         if is_func(stmt[1]):
-            exe(stmt[1])
+            exe_func(get_func(stmt[1]))
         elif is_digit(stmt[1]):
             VARIABLES[stmt[0]] = get_int(stmt[1])
         else:
@@ -125,8 +127,16 @@ VARIABLES["add"] = addx
 
 def ifx():
     if get_value("_1"):
-        exe("_2()")
+        exe_func(get_func("_2()"))
 VARIABLES["if"] = ifx
+
+def loop():
+    func = get_func("_1()")
+    while True:
+        exe_func(func)
+        if get_value("_r"):
+            break
+VARIABLES["loop"] = loop
 
 
 src = file_iter()
@@ -134,4 +144,4 @@ VARIABLES["static_method_name_main"] = parse_method(False)
 # print(VARIABLES)
 # print("################################################")
 
-exe("static_method_name_main()")
+exe_func(get_func("static_method_name_main()"))
