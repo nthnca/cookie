@@ -6,16 +6,16 @@ r=20;
 r=10;
 _1=1;
 _2=a;
-_=if();
+if();
 _1=r;
-_=print();
+print();
 
 r=10;
 _1=0;
 _2=a;
-_=if();
+if();
 _1=r;
-_=print();
+print();
 
 END_PROGRAM
 

@@ -1,9 +1,8 @@
 START_PROGRAM
 _1=10;
 _2=15;
-add();
-_1=_r;
-_=print();
+_1=add();
+print();
 END_PROGRAM
 
 START_OUTPUT

@@ -4,27 +4,25 @@ python recursion depth in trying to run for more than about 300 iterations.
 START_PROGRAM
 decr={
   _2=-1;
-  _=add();
-  _1=_r;
+  _r=add();
 }
 
 stop=1000;
 payload={
   _1=stop;
-  _=decr();
-  stop=_1;
+  stop=decr();
 
   _1=stop;
-  _=print();
+  print();
   _r=1;
   _2={
     _r=0;
   }
-  _=if();
+  if();
 }
 
 _1=payload;
-_=loop();
+loop();
 
 END_PROGRAM
 

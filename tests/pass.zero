@@ -1,6 +1,6 @@
 START_PROGRAM
 _1=0;
-_=print();
+print();
 END_PROGRAM
 
 START_OUTPUT

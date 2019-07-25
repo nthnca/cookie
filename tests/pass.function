@@ -6,10 +6,10 @@ b={
     e=13;
   }
 }
-_=b();
-_=d();
+b();
+d();
 _1=e;
-_=print();
+print();
 END_PROGRAM
 
 START_OUTPUT

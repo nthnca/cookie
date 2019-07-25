@@ -1,29 +1,27 @@
 START_PROGRAM
 decr={
   _2=-1;
-  _=add();
-  _1=_r;
+  _r=add();
 }
 
 loop={
   _1=stop;
-  _=decr();
-  stop=_1;
+  stop = decr();
 
-  _=payload();
+  payload();
 
   _1=stop;
   _2=loop;
-  _=if();
+  if();
 }
 
 stop=10;
 payload={
   _1=stop;
-  _=print();
+  print();
 }
 
-_=loop();
+loop();
 
 END_PROGRAM
 START_OUTPUT
