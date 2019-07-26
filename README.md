@@ -20,7 +20,7 @@ f = {
 }
 ```
 
-Call the method `f`, and assign the result to `a`.
+Call a function, and assign the result to `a`.
 ```
 a = f();
 ```
@@ -29,7 +29,7 @@ Some further notes:
 - All variables are globally scoped. So have fun!  :-)
 - You can't pass parameters to a function, but variables are globally scoped so you can
   just use a normal variable.
-- A method *returns* the value that is assigned to `_r` when the method exits.
+- A function *returns* the value that is assigned to `_r` when the function exits.
 - There are just four built in functions:
   - print(): prints the value in variable `_1`.
   - add(): returns the result of adding the values in variable `_1` and `_2`.
@@ -43,6 +43,23 @@ although variables can be re-used.
 
 By convention we use the variables `_1`, `_2`, etc to pass data into a function.
 
+
 ## Examples
 
 See the tests directory for examples.
+
+
+## Ideas
+
+So here you go, have fun improving the language, some ideas:
+- Allow passing parameters to functions.
+- Make it so variables are scoped to the current function.
+- Add a return statement.
+- Add more builtin functions (less than, multiply, etc, etc)
+  - Try not to add builtin types that you could implement in the language itself.
+- Add more types: strings, arrays, maps, structs, etc.
+- Allow importing code from other files.
+- Whatever else you want...
+
+For bonus points:
+- Re-implement this little toy language, in the language itself...  :-)

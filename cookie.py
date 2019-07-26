@@ -135,13 +135,13 @@ def ifx():
 VARIABLES["if"] = ifx
 
 
-def loop():
+def loopx():
     func = get_func("_1")
     continu = True
     while continu:
         exe_func(func)
         continu = get_value("_r")
-VARIABLES["loop"] = loop
+VARIABLES["loop"] = loopx
 
 
 exe_func(ParseMethod(Tokenizer(), False).stmts)
