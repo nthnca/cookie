@@ -141,16 +141,14 @@ VARIABLES["if"] = ifx
 
 def loop():
     func = get_func("_1")
-    while True:
+    continu = True
+    while continu:
         exe_func(func)
-        if get_value("_r"):
-            break
+        continu = get_value("_r")
 VARIABLES["loop"] = loop
 
 
 src = Tokenizer()
 VARIABLES["static_method_name_main"] = ParseMethod(False).stmts
-# print(VARIABLES)
-# print("################################################")
 
 exe_func(get_func("static_method_name_main"))
