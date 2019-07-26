@@ -25,7 +25,6 @@ def retvrn(t):
 
 
 class ParseMethod:
-
     def __init__(self, tokenizer, embedded):
         self.tokenizer = tokenizer
         self.stmts = ()
@@ -37,24 +36,24 @@ class ParseMethod:
                     ERROR("Unexpected end of file.")
                 break
 
-            t = self.tokenizer.next_token(
-                ((IDENT_RE, self.ident), (CURLY_CLOSE_RE, retvrn)), "Variable")
+            t = self.tokenizer.next_token((
+                (IDENT_RE, self.ident), (CURLY_CLOSE_RE, retvrn)), "Variable")
             if t == "}":
                 if not embedded:
                     ERROR("Unexpected '}'")
                 break
 
-            self.stmts = self.stmts + ((self.var, self.op, self.op_type),)
+            self.stmts = self.stmts + ((self.var, self.op, self.op_type), )
 
     def ident(self, t):
         self.var = t
-        self.tokenizer.next_token(
-            ((SET_RE, self.set), (FUNCTION_RE, self.function_no_set), ), "=")
+        self.tokenizer.next_token((
+            (SET_RE, self.set),
+            (FUNCTION_RE, self.function_no_set), ), "=")
 
     def set(self, _):
         self.tokenizer.next_token(
-            ((INT_RE, self.getint),
-             (IDENT_RE, self.literal),
+            ((INT_RE, self.getint), (IDENT_RE, self.literal),
              (CURLY_OPEN_RE, self.method)), "Operation")
 
     def method(self, _):
@@ -64,34 +63,35 @@ class ParseMethod:
     def getint(self, t):
         self.op = int(t)
         self.op_type = "RAW"
-        self.tokenizer.next_token(((EOL_RE, retvrn),), ";")
+        self.tokenizer.next_token(((EOL_RE, retvrn), ), ";")
 
     def literal(self, t):
         self.op = t
-        self.tokenizer.next_token(
-            ((EOL_RE, retvrn), (FUNCTION_RE, self.function), ), ";")
+        self.tokenizer.next_token((
+            (EOL_RE, retvrn),
+            (FUNCTION_RE, self.function), ), ";")
 
     def function_no_set(self, _):
         self.op = self.var
         self.op_type = "EXE"
         self.var = "_"
-        self.tokenizer.next_token(((EOL_RE, retvrn),), ";")
+        self.tokenizer.next_token(((EOL_RE, retvrn), ), ";")
 
     def function(self, _):
         self.op_type = "EXE"
-        self.tokenizer.next_token(((EOL_RE, retvrn),), ";")
+        self.tokenizer.next_token(((EOL_RE, retvrn), ), ";")
 
 
 def get_value(v1):
     if v1 not in VARIABLES:
-        ERROR("Unknown value: %s" % (v1,))
+        ERROR("Unknown value: %s" % (v1, ))
 
     return VARIABLES[v1]
 
 
 def get_func(name):
     if name not in VARIABLES:
-        ERROR("Unknown function: %s" % (name,))
+        ERROR("Unknown function: %s" % (name, ))
 
     return VARIABLES[name]
 
@@ -114,8 +114,11 @@ def exe_func(func):
 
 # Built in functions, these probably belong in their own file.
 
+
 def printx():
     print(get_value("_1"))
+
+
 VARIABLES["print"] = printx
 
 
@@ -123,12 +126,16 @@ def addx():
     x = get_value("_1") + get_value("_2")
     VARIABLES["_r"] = x
     return x
+
+
 VARIABLES["add"] = addx
 
 
 def ifx():
     if get_value("_1"):
         exe_func(get_func("_2"))
+
+
 VARIABLES["if"] = ifx
 
 
@@ -138,7 +145,8 @@ def loopx():
     while continu:
         exe_func(func)
         continu = get_value("_r")
-VARIABLES["loop"] = loopx
 
+
+VARIABLES["loop"] = loopx
 
 exe_func(ParseMethod(Tokenizer(), False).stmts)

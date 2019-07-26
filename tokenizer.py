@@ -6,11 +6,11 @@ def ERROR(msg):
     sys.stderr.write(msg + "\n")
     exit(1)
 
+
 SPACE_RE = re.compile(r"\s+")
 
 
 class Tokenizer:
-
     def __init__(self):
         self.line = None
         self.line_no = 0
