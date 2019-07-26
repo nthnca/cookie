@@ -62,4 +62,5 @@ So here you go, have fun improving the language, some ideas:
 - Whatever else you want...
 
 For bonus points:
-- Re-implement this little toy language, in the language itself...  :-)
+- Re-implement this little toy language in your favorite language.
+- Re-implement this little toy language, in this toy language itself...  :-)
