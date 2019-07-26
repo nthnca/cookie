@@ -19,8 +19,6 @@ FUNCTION_RE = re.compile("[(][)]")
 
 VARIABLES = {}
 
-func_count = 0
-
 
 def retvrn(t):
     return t
@@ -28,17 +26,18 @@ def retvrn(t):
 
 class ParseMethod:
 
-    def __init__(self, embedded):
+    def __init__(self, tokenizer, embedded):
+        self.tokenizer = tokenizer
         self.stmts = ()
 
         while True:
             self.var, self.op, self.op_type = (None, None, None)
-            if src.eof():
+            if self.tokenizer.eof():
                 if embedded:
                     ERROR("Unexpected end of file.")
                 break
 
-            t = src.next_token(
+            t = self.tokenizer.next_token(
                 ((IDENT_RE, self.ident), (CURLY_CLOSE_RE, retvrn)), "Variable")
             if t == "}":
                 if not embedded:
@@ -49,42 +48,39 @@ class ParseMethod:
 
     def ident(self, t):
         self.var = t
-        src.next_token(
+        self.tokenizer.next_token(
             ((SET_RE, self.set), (FUNCTION_RE, self.function_no_set), ), "=")
 
     def set(self, t):
-        op = src.next_token(
+        op = self.tokenizer.next_token(
             ((INT_RE, self.getint),
              (IDENT_RE, self.literal),
              (CURLY_OPEN_RE, self.method)),
                             "Operation")
 
     def method(self, t):
-        global func_count
-        var_name = "static_method_name_%d" % (func_count,)
-        func_count += 1
-        VARIABLES[var_name] = ParseMethod(True).stmts
-        self.op = var_name
+        self.op_type = "RAW"
+        self.op = ParseMethod(self.tokenizer, True).stmts
 
     def getint(self, t):
         self.op = int(t)
-        self.op_type = "INT"
-        src.next_token(((EOL_RE, retvrn),), ";")
+        self.op_type = "RAW"
+        self.tokenizer.next_token(((EOL_RE, retvrn),), ";")
 
     def literal(self, t):
         self.op = t
-        src.next_token(
+        self.tokenizer.next_token(
             ((EOL_RE, retvrn), (FUNCTION_RE, self.function), ), ";")
 
     def function_no_set(self, t):
         self.op = self.var
         self.op_type = "EXE"
         self.var = "_"
-        src.next_token(((EOL_RE, retvrn),), ";")
+        self.tokenizer.next_token(((EOL_RE, retvrn),), ";")
 
     def function(self, t):
         self.op_type = "EXE"
-        src.next_token(((EOL_RE, retvrn),), ";")
+        self.tokenizer.next_token(((EOL_RE, retvrn),), ";")
 
 
 def get_value(v1):
@@ -108,7 +104,7 @@ def exe_func(func):
         return func()
 
     for stmt in func:
-        if stmt[2] == "INT":
+        if stmt[2] == "RAW":
             VARIABLES[stmt[0]] = stmt[1]
         elif stmt[2] == "EXE":
             VARIABLES[stmt[0]] = exe_func(get_func(stmt[1]))
@@ -148,7 +144,4 @@ def loop():
 VARIABLES["loop"] = loop
 
 
-src = Tokenizer()
-VARIABLES["static_method_name_main"] = ParseMethod(False).stmts
-
-exe_func(get_func("static_method_name_main"))
+exe_func(ParseMethod(Tokenizer(), False).stmts)
