@@ -52,6 +52,7 @@ See the tests directory for examples.
 ## Ideas
 
 So here you go, have fun improving the language, some ideas:
+- Add the ability to add comments // to a program.
 - Allow passing parameters to functions.
 - Make it so variables are scoped to the current function.
 - Add a return statement.
