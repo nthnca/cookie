@@ -1,4 +1,5 @@
 import sys
+import re
 
 from tokenizer import Tokenizer
 
@@ -8,13 +9,13 @@ def ERROR(msg):
     exit(1)
 
 
-IDENT_RE = "[a-z_][a-z0-9_]*"
-INT_RE = "[-]?[1-9][0-9]*|0"
-SET_RE = "="
-EOL_RE = ";"
-CURLY_OPEN_RE = "{"
-CURLY_CLOSE_RE = "}"
-FUNCTION_RE = "[(][)]"
+IDENT_RE = re.compile("[a-z_][a-z0-9_]*")
+INT_RE = re.compile("[-]?[1-9][0-9]*|0")
+SET_RE = re.compile("=")
+EOL_RE = re.compile(";")
+CURLY_OPEN_RE = re.compile("{")
+CURLY_CLOSE_RE = re.compile("}")
+FUNCTION_RE = re.compile("[(][)]")
 
 VARIABLES = {}
 

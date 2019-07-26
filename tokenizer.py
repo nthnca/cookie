@@ -6,6 +6,8 @@ def ERROR(msg):
     print(msg)
     exit(1)
 
+SPACE_RE = re.compile("\s+")
+
 
 class Tokenizer:
 
@@ -31,13 +33,13 @@ class Tokenizer:
             ERROR("Unexpected end of file.")
 
         # Skip whitespace.
-        m = re.match("\s+", self.line)
+        m = SPACE_RE.match(self.line)
         if m:
             self.line = self.line[len(m.group(0)):]
             self.pos += len(m.group(0))
 
         for r in regexs:
-            m = re.match(r[0], self.line)
+            m = r[0].match(self.line)
             if m:
                 self.line = self.line[len(m.group(0)):]
                 self.pos += len(m.group(0))
