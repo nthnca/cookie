@@ -3,10 +3,10 @@ import re
 
 
 def ERROR(msg):
-    print(msg)
+    sys.stderr.write(msg + "\n")
     exit(1)
 
-SPACE_RE = re.compile("\s+")
+SPACE_RE = re.compile(r"\s+")
 
 
 class Tokenizer:
@@ -49,4 +49,4 @@ class Tokenizer:
               (self.line_no, self.pos, error, self.line))
 
     def eof(self):
-        return self._next_line() == None
+        return self._next_line() is None

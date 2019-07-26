@@ -5,7 +5,7 @@ from tokenizer import Tokenizer
 
 
 def ERROR(msg):
-    print(msg)
+    sys.stderr.write(msg + "\n")
     exit(1)
 
 
@@ -51,14 +51,13 @@ class ParseMethod:
         self.tokenizer.next_token(
             ((SET_RE, self.set), (FUNCTION_RE, self.function_no_set), ), "=")
 
-    def set(self, t):
-        op = self.tokenizer.next_token(
+    def set(self, _):
+        self.tokenizer.next_token(
             ((INT_RE, self.getint),
              (IDENT_RE, self.literal),
-             (CURLY_OPEN_RE, self.method)),
-                            "Operation")
+             (CURLY_OPEN_RE, self.method)), "Operation")
 
-    def method(self, t):
+    def method(self, _):
         self.op_type = "RAW"
         self.op = ParseMethod(self.tokenizer, True).stmts
 
@@ -72,29 +71,27 @@ class ParseMethod:
         self.tokenizer.next_token(
             ((EOL_RE, retvrn), (FUNCTION_RE, self.function), ), ";")
 
-    def function_no_set(self, t):
+    def function_no_set(self, _):
         self.op = self.var
         self.op_type = "EXE"
         self.var = "_"
         self.tokenizer.next_token(((EOL_RE, retvrn),), ";")
 
-    def function(self, t):
+    def function(self, _):
         self.op_type = "EXE"
         self.tokenizer.next_token(((EOL_RE, retvrn),), ";")
 
 
 def get_value(v1):
     if v1 not in VARIABLES:
-        print("Unknown value:", v1)
-        sys.exit(1)
+        ERROR("Unknown value: %s" % (v1,))
 
     return VARIABLES[v1]
 
 
 def get_func(name):
     if name not in VARIABLES:
-        print("Unknown function:", name)
-        sys.exit(1)
+        ERROR("Unknown function: %s" % (name,))
 
     return VARIABLES[name]
 
